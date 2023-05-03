@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1004558855779",
+    "project_id": "doctunes-audiotech",
+    "storage_bucket": "doctunes-audiotech.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004558855779:android:d8769169adbcfbb1115256",
+        "android_client_info": {
+          "package_name": "com.example.doctunes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1004558855779-qbj9d7qoi813llkhmdvo9kvbp2nhband.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.doctunes",
+            "certificate_hash": "593205be6cf819accf2dd0fa7f3830e44a0d5286"
+          }
+        },
+        {
+          "client_id": "1004558855779-85cr57hnq5c7avl2nf8ral21ns541qj5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB0g-RTzK-c1ZZoSJIZ8VAY-vdyK7UB2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1004558855779-85cr57hnq5c7avl2nf8ral21ns541qj5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
