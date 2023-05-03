@@ -59,7 +59,7 @@ class _Question_2State extends State<Question_2> {
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            height: 75,
+            height: ,
             width: MediaQuery.of(context).size.width,
             child: Text(
               "What do you want Doctunes to help you do, ${_userData['displayName']}",

@@ -7,8 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import '../../Useful/Functions.dart';
 import '../Model.dart';
-import 'Onboarding Screen.dart';
-import 'Widget.dart';
+git initimport 'Widget.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
