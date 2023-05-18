@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import '../../Useful/Functions.dart';
-import '../Model.dart';
-git initimport 'Widget.dart';
+import '../../Useful/Model.dart';
+import '../../Useful/Widget.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -24,9 +24,9 @@ class _Question_1State extends State<Question_1> {
   String username = "";
   final FirebaseAuth auth = FirebaseAuth.instance;
   List<QuestionModel> questions = [
-    QuestionModel("assets/images/education 1.png", "School", false),
-    QuestionModel("assets/images/freelance 1.png", "Work", false),
-    QuestionModel("assets/images/bench 1.png", "Leisure", false)
+    QuestionModel("assets/images/education.png", "School", false),
+    QuestionModel("assets/images/freelance.png", "Work", false),
+    QuestionModel("assets/images/bench.png", "Leisure", false)
   ];
   int selectedQuestionIndex = -1;
   Map<String, dynamic> _userData = {};
@@ -50,33 +50,33 @@ class _Question_1State extends State<Question_1> {
       body: Column(
         children: [
           const   StepProgressIndicator(
-            totalSteps: 3,
+            totalSteps: 4,
             currentStep: 1,
             selectedColor: Colors.blue,
             unselectedColor: Colors.grey,
           ),
-          const       SizedBox(
+          const   SizedBox(
             height: 30,
           ),
           Container(
             padding:    const EdgeInsets.symmetric(horizontal: 10),
-            height: 100,
+            height: MediaQuery.of(context).size.height * 0.12,
             width: MediaQuery.of(context).size.width,
             child: Text(
               "Hey ${_userData['displayName']}, What is most of your reading for?",
               style: GoogleFonts.roboto(
-                fontSize: 25,
+                fontSize: MediaQuery.of(context).size.width * 0.06,
                 fontWeight: FontWeight.w500,
               ),
             ),
           ),
-          ListView.builder(
-            padding:   const  EdgeInsets.all(10),
-            itemExtent: 80.0,
-            shrinkWrap: true,
-            itemCount: questions.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Consumer(builder: (context, answersProvider, _) {
+          Expanded(
+            child: ListView.builder(
+              padding:   const  EdgeInsets.all(10),
+              itemExtent: MediaQuery.of(context).size.width * 0.18,
+              shrinkWrap: true,
+              itemCount: questions.length,
+              itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                     onTap: () {
                       widget.controller.nextPage(
@@ -91,10 +91,11 @@ class _Question_1State extends State<Question_1> {
                       title: questions[index].title,
                       isSelected: questions[index].isSelected,
                     ));
-              });
-            },
+              },
+            ),
           ),
-          Expanded(
+          SizedBox(
+            height: 236,
             child: Stack(
               alignment: AlignmentDirectional.bottomCenter,
               children: [

@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../Onboarding Screens/Model.dart';
+import '../../Useful/Model.dart';
 import '../../Useful/Functions.dart';
 
 final _messangerKey = GlobalKey<ScaffoldMessengerState>();

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:doctunes/Onboarding%20Screens/Model.dart';
+import 'package:doctunes/MainScreens/MyFiles.dart';
+import 'package:doctunes/Useful/Model.dart';
 import 'package:doctunes/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,7 @@ class _language_SelectionState extends State<language_Selection> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -137,11 +139,11 @@ class _language_SelectionState extends State<language_Selection> {
                                   borderRadius: BorderRadius.circular(15),
                                 )),
                             onPressed: () async {
-                              await saveSelectedItem(_selectedItem!);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => home()),
+                                MaterialPageRoute(builder: (context) => MyFiles()),
                               );
+                              await saveSelectedItem(_selectedItem!);
                             },
                             child:    const Text(
                               "DONE",

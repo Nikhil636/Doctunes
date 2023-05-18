@@ -48,20 +48,20 @@ class _loginState extends State<login> {
                 ),
                 Text(
                   "Log In!",
-                  style: GoogleFonts.roboto(fontSize: 48, fontWeight: FontWeight.w700),
+                  style: GoogleFonts.roboto(fontSize: MediaQuery.of(context).size.width * 0.125, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Text(
                   "Login to a world of seamless experience.",
-                  style: GoogleFonts.roboto(fontSize: 13, fontWeight: FontWeight.w600,color: hexStringToColor("#6B6B6B")),
+                  style: GoogleFonts.roboto(fontSize: MediaQuery.of(context).size.width * 0.032, fontWeight: FontWeight.w600,color: hexStringToColor("#6B6B6B")),
                 ),
                 const  SizedBox(
                   height: 35,
                 ),
                 SizedBox(
-                  height: 50,
+                  height: MediaQuery.of(context).size.width/8,
                   width: MediaQuery.of(context).size.width / 1.08,
                   child: TextFormField(
                     controller: idController,
@@ -110,7 +110,7 @@ class _loginState extends State<login> {
                   height: 18,
                 ),
                 SizedBox(
-                  height: 50,
+                  height: MediaQuery.of(context).size.width/8,
                   width: MediaQuery.of(context).size.width / 1.08,
                   child: TextFormField
                     (
@@ -177,14 +177,14 @@ class _loginState extends State<login> {
                         child: Text(
                           "Forgot password?",
                           style: GoogleFonts.roboto(
-                              color: hexStringToColor("#6B6B6B"), fontSize: 12,fontWeight: FontWeight.w500),
+                              color: hexStringToColor("#6B6B6B"), fontSize:  MediaQuery.of(context).size.width * 0.03,fontWeight: FontWeight.w500),
                         ),
                       ),
                     )),
                 const    SizedBox(height: 15),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2,
-                  height: 50,
+                  height: MediaQuery.of(context).size.width/8,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: hexStringToColor("#2196F3"),
@@ -196,8 +196,8 @@ class _loginState extends State<login> {
                       onPressed: () {
                        // login(context);
                       },
-                      child:  const Text(
-                        "LOGIN",
+                      child:  Text(
+                        "LOGIN",style: GoogleFonts.roboto(fontSize: MediaQuery.of(context).size.width * 0.05,fontWeight: FontWeight.w500),
                       )),
                 ),
                 Stack(

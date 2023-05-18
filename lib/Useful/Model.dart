@@ -17,5 +17,16 @@ class QuestionModel {
   }
 }
 
+class FeaturesModel {
+  String BgImg;
+  String Title;
+  IconData ImgIcon;
+  FeaturesModel(this.BgImg, this.Title, this.ImgIcon);
 
-
+}
+class FilesModel {
+  String Title;
+  String SubTitle;
+  String ImgFileType;
+  FilesModel(this.Title,this.SubTitle,this.ImgFileType);
+}

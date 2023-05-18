@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:doctunes/Authentication/Screens/Sign_up.dart';
 import 'package:provider/provider.dart';
 
-import '../Model.dart';
+import '../../Useful/Model.dart';
+import 'Ques_4.dart';
 
 // class AnswersProvider with ChangeNotifier {
 //   final List<String> _answers = ['', '', ''];
@@ -65,7 +66,8 @@ class _Onboarding_MainState extends State<Onboarding_Main> {
                 children: [
                   Question_1(controller: controller               ),
                   Question_2(controller: controller),
-                  Question_3(controller: controller)
+                  Question_3(controller: controller),
+                  Question_4()
                 ],
               ),
             ),

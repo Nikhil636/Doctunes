@@ -1,9 +1,11 @@
+import 'package:doctunes/MainScreens/MyFiles.dart';
+import 'package:doctunes/MainScreens/Premium_Screen.dart';
 import 'package:doctunes/Onboarding%20Screens/Screens/Onboarding%20Screen.dart';
+import 'package:doctunes/Onboarding%20Screens/Screens/Ques_4.dart';
 import 'package:doctunes/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'Authentication/Screens/Sign_up.dart';
 import 'Useful/Functions.dart';
 
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
       if (user != null) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (BuildContext context) => const home(),
+            builder: (BuildContext context) => const sign_up(),
           ),
         );
       }
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
 
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Splash(),
+      home: Onboarding_Main(),
     );
   }
 }

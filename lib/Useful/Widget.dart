@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../Useful/Functions.dart';
+import 'Functions.dart';
 
 class ListItemWidget extends StatelessWidget {
   final String img;
@@ -75,3 +75,70 @@ class ListItemWidget extends StatelessWidget {
     );
   }
 }
+
+
+//Premium Screen Widget
+
+
+
+class FeaturesWidget extends StatelessWidget {
+  final String BgImg;
+  final String Title;
+  final IconData ImgIcon;
+
+  const FeaturesWidget({
+    Key? key,
+    required this.BgImg,
+    required this.Title,
+    required this.ImgIcon,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 5,
+      width: MediaQuery.of(context).size.width / 2.5,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        gradient: LinearGradient(
+          begin: Alignment.bottomRight,
+          end: Alignment.topLeft,
+          colors: [
+            hexStringToColor("#518BD3"),
+            hexStringToColor("#1D568B"),
+            hexStringToColor("#1D82D2"),
+          ],
+        ),
+      ),
+      child: Stack(
+        children: [
+          Align(
+            alignment: AlignmentDirectional.center,
+            child: Opacity(
+              opacity: 0.3,
+              child: Image.asset(
+                BgImg,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Icon(ImgIcon,color: Colors.white,size: 40,),
+                Text(
+                  Title,
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+

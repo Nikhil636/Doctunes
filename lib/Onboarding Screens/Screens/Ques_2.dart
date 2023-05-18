@@ -6,9 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import '../../Useful/Functions.dart';
-import '../Model.dart';
+import '../../Useful/Model.dart';
 import 'Onboarding Screen.dart';
-import 'Widget.dart';
+import '../../Useful/Widget.dart';
 
 class Question_2 extends StatefulWidget {
   final PageController controller;
@@ -19,10 +19,10 @@ class Question_2 extends StatefulWidget {
 }
 
 List<QuestionModel> questions = [
-  QuestionModel("assets/images/book 1.png", "Improve reading speed", false),
-  QuestionModel("assets/images/smart 1.png", "Read more easily", false),
-  QuestionModel("assets/images/learning 1.png", "Improve comprehension", false),
-  QuestionModel("assets/images/multitasking 1.png", "Read and multitask", false)
+  QuestionModel("assets/images/book.png", "Improve reading speed", false),
+  QuestionModel("assets/images/smart.png", "Read more easily", false),
+  QuestionModel("assets/images/learning.png", "Improve comprehension", false),
+  QuestionModel("assets/images/multitasking.png", "Read and multitask", false)
 ];
 
 class _Question_2State extends State<Question_2> {
@@ -49,7 +49,7 @@ class _Question_2State extends State<Question_2> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const StepProgressIndicator(
-            totalSteps: 3,
+            totalSteps: 4,
             currentStep: 2,
             selectedColor: Colors.blue,
             unselectedColor: Colors.grey,
@@ -59,12 +59,12 @@ class _Question_2State extends State<Question_2> {
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            height: ,
+            height: MediaQuery.of(context).size.height * 0.12,
             width: MediaQuery.of(context).size.width,
             child: Text(
-              "What do you want Doctunes to help you do, ${_userData['displayName']}",
+              "What do you want Doctunes to help you do,${_userData['displayName']}",
               style: GoogleFonts.roboto(
-                fontSize: 25,
+                fontSize: MediaQuery.of(context).size.width * 0.06,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -75,7 +75,7 @@ class _Question_2State extends State<Question_2> {
               "Select all that apply",
               style: GoogleFonts.roboto(
                   color: hexStringToColor("#6B6B6B"),
-                  fontSize: 15,
+                  fontSize: MediaQuery.of(context).size.width * 0.038,
                   fontWeight: FontWeight.w500),
             ),
           ),
@@ -84,14 +84,13 @@ class _Question_2State extends State<Question_2> {
           ),
           ListView.builder(
             padding: const EdgeInsets.all(10),
-            itemExtent: 80.0,
+            itemExtent: MediaQuery.of(context).size.width * 0.18,
             shrinkWrap: true,
             itemCount: questions.length,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                   onTap: () {
                     toggleSelection(index);
-
                   },
                   child: ListItemWidget(
                     img: questions[index].img,
@@ -101,50 +100,57 @@ class _Question_2State extends State<Question_2> {
             },
           ),
           Expanded(
-            child: Stack(
-              alignment: AlignmentDirectional.bottomCenter,
-              children: [
-                SvgPicture.asset(
-                  'assets/images/Vector-1.svg',
-                  width: MediaQuery.of(context).size.width,
-                ),
-                SvgPicture.asset(
-                  'assets/images/Vector-2.svg',
-                  width: MediaQuery.of(context).size.width,
-                ),
-                SvgPicture.asset(
-                  'assets/images/Vector-3.svg',
-                  width: MediaQuery.of(context).size.width,
-                ),
-                SvgPicture.asset(
-                  "assets/images/Vector-4.svg",
-                  width: MediaQuery.of(context).size.width,
-                ), Visibility(
-                  visible: isContinueButtonVisible,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width / 2,
-                    height: 50,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue.shade400,
-                            elevation: 0.0,
-                            shadowColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            )),
-                        onPressed: () {
-                          onSave(context);
-                          widget.controller.nextPage(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.easeInOut,
-                          );
-                        },
-                        child: Text(
-                          "Continue",
-                        )),
+            child: SizedBox(
+              height: 236,
+              child: Stack(
+                alignment: AlignmentDirectional.bottomCenter,
+                children: [
+                  SvgPicture.asset(
+                    'assets/images/Vector-1.svg',
+                    width: MediaQuery.of(context).size.width,
                   ),
-                ),
-              ],
+                  SvgPicture.asset(
+                    'assets/images/Vector-2.svg',
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                  SvgPicture.asset(
+                    'assets/images/Vector-3.svg',
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                  SvgPicture.asset(
+                    "assets/images/Vector-4.svg",
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional.center,
+                    child: Visibility(
+                      visible: isContinueButtonVisible,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.48,
+                        height: MediaQuery.of(context).size.height * 0.07,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue.shade400,
+                                elevation: 0.0,
+                                shadowColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                )),
+                            onPressed: () {
+                              onSave(context);
+                              widget.controller.nextPage(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.easeInOut,
+                              );
+                            },
+                            child: Text(
+                              "Continue",
+                            )),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -175,7 +181,6 @@ class _Question_2State extends State<Question_2> {
       });
     }
   }
-
 
   void onSave(BuildContext context) {
     final firestore = FirebaseFirestore.instance;

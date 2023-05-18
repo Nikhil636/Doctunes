@@ -46,7 +46,8 @@ class _sign_upState extends State<sign_up> {
             Center(
                 child: Text(
               "Sign Up!",
-              style: GoogleFonts.roboto(fontSize: 48, fontWeight: FontWeight.w700),
+              style:
+                  GoogleFonts.roboto(fontSize: MediaQuery.of(context).size.width * 0.125, fontWeight: FontWeight.w700),
             )),
             const SizedBox(
               height: 10,
@@ -54,7 +55,12 @@ class _sign_upState extends State<sign_up> {
             Center(
                 child: Text(
               "Sign up for an aesthetic journey like no other.",
-              style: GoogleFonts.roboto(fontSize: 13, fontWeight: FontWeight.w600,color: hexStringToColor("#6B6B6B")),
+              style: GoogleFonts.roboto(
+                  fontSize:
+                  MediaQuery.of(context).size.width * 0.032
+                  ,
+                  fontWeight: FontWeight.w600,
+                  color: hexStringToColor("#6B6B6B")),
             )),
             const SizedBox(
               height: 35,
@@ -68,7 +74,8 @@ class _sign_upState extends State<sign_up> {
                     accessToken: googleAuth?.accessToken,
                     idToken: googleAuth?.idToken,
                   );
-                  final userCredential = await _auth.signInWithCredential(credential);
+                  final userCredential =
+                      await _auth.signInWithCredential(credential);
                   final user = userCredential.user;
                   if (user != null) {
                     await FirebaseFirestore.instance
@@ -79,9 +86,10 @@ class _sign_upState extends State<sign_up> {
                       'email': user.email,
                       'photoURL': user.photoURL,
                     });
-                 Navigator.push(
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Onboarding_Main()),
+                      MaterialPageRoute(
+                          builder: (context) => Onboarding_Main()),
                     );
                   }
                 } catch (e) {
@@ -89,8 +97,8 @@ class _sign_upState extends State<sign_up> {
                 }
               },
               child: Container(
-                height: 50,
-                width: 350,
+                height: MediaQuery.of(context).size.width/8,
+                width:  MediaQuery.of(context).size.width/1.19,
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(13.0),
@@ -107,8 +115,11 @@ class _sign_upState extends State<sign_up> {
                     const SizedBox(width: 10.0),
                     Text(
                       'Continue with Google',
-                      style:
-                          GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 23),
+                      style: GoogleFonts.roboto(
+                          fontWeight: FontWeight.w500,
+                          fontSize:
+                          MediaQuery.of(context).size.width * 0.056
+                      ),
                     ),
                   ],
                 ),
@@ -120,28 +131,31 @@ class _sign_upState extends State<sign_up> {
             InkWell(
               onTap: () {},
               child: Container(
-                height: 50,
-                width: 350,
+                height:   MediaQuery.of(context).size.width/8,
+                width:MediaQuery.of(context).size.width/1.19,
                 decoration: BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(13.0),
                 ),
                 padding: EdgeInsets.symmetric(vertical: 10.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     const Icon(
                       Icons.apple,
                       color: Colors.white,
-                      size: 25,
+                      size: 29,
                     ),
-                    SizedBox(width: 16.0),
-                    Text(
-                      'Continue with Apple',
-                      style: GoogleFonts.roboto(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 23,
-                          color: Colors.white),
+                    SizedBox(width: 10.0),
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        'Continue with Apple',
+                        style: GoogleFonts.roboto(
+                            fontWeight: FontWeight.w500,
+                            fontSize:   MediaQuery.of(context).size.width * 0.056,
+                            color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
@@ -152,12 +166,14 @@ class _sign_upState extends State<sign_up> {
             ),
             InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const User_Detail()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const User_Detail()));
               },
               child: Container(
-                height: 50,
-                width: 350,
+                height: MediaQuery.of(context).size.width/8,
+                width: MediaQuery.of(context).size.width/1.19,
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(13.0),
@@ -194,7 +210,7 @@ class _sign_upState extends State<sign_up> {
                   child: Text(
                     "Login",
                     style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w600,
                         color: hexStringToColor("#2196F3"),
                         decoration: TextDecoration.underline),
                   ),

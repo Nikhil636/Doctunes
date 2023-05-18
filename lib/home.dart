@@ -1,4 +1,5 @@
 import 'package:doctunes/Authentication/Screens/Sign_up.dart';
+import 'package:doctunes/MainScreens/Premium_Screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -21,7 +22,7 @@ class _homeState extends State<home> {
         child: ElevatedButton(
           child: Text('naelfln'),
           onPressed: (){
-            logout();
+            Premium();
           },
         ),
       ),

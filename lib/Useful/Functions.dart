@@ -76,12 +76,14 @@ navScreen(Widget a, BuildContext context, bool replace) {
   }
 }
 
-hexStringToColor(String hexColor) {
+Color hexStringToColor(String hexColor, {double opacity = 1.0}) {
   hexColor = hexColor.toUpperCase().replaceAll("#", "");
   if (hexColor.length == 6) {
     hexColor = "FF" + hexColor;
   }
-  return Color(int.parse(hexColor, radix: 16));
+  final color = Color(int.parse(hexColor, radix: 16));
+  return color.withOpacity(opacity);
 }
+
 
 
