@@ -24,6 +24,14 @@ dependencies:
   provider: ^6.0.5
   google_fonts: ^4.0.4
   carousel_slider: ^4.2.1
+  syncfusion_flutter_sliders: ^21.2.6
+  shared_preferences: ^2.1.1
+  image_picker: ^0.8.7+5
+  switcher_button: ^0.0.4
+  gradient_borders: ^1.0.0
+  sqflite: ^2.2.8+2
+
+
 
 
 dev_dependencies:
@@ -41,7 +49,19 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/
+    - assets/OS1/
+    - assets/OS2/
+    - assets/OS3/
+    - assets/File Type/
+    - assets/MyFiles/
+    - assets/MyFiles/FileHold/
+    - assets/PremiumScreen/
+    - assets/Home Screen/
+    - assets/Home Screen/import_dropdown/
+    - assets/Home Screen/home/
+    - assets/ProfilePage/
+    - assets/
+    - assets/AuthBG/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

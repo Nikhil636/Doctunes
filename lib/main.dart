@@ -1,17 +1,26 @@
-import 'package:doctunes/MainScreens/MyFiles.dart';
-import 'package:doctunes/MainScreens/Premium_Screen.dart';
-import 'package:doctunes/Onboarding%20Screens/Screens/Onboarding%20Screen.dart';
-import 'package:doctunes/Onboarding%20Screens/Screens/Ques_4.dart';
-import 'package:doctunes/home.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctunes/Screens/MainScreens/AudioSelect.dart';
+import 'package:doctunes/Screens/MainScreens/Folder.dart';
+import 'package:doctunes/Screens/MainScreens/MyFiles.dart';
+import 'package:doctunes/Screens/MainScreens/Premium_Screen.dart';
+import 'package:doctunes/Screens/MainScreens/homepage.dart';
+import 'package:doctunes/Screens/MainScreens/profile.dart';
+import 'package:doctunes/Screens/MainScreens/settings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'Authentication/Screens/Sign_up.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'Screens/Authentication/Screens/Sign_up.dart';
+import 'ThemeModel/thememodel.dart';
 import 'Useful/Functions.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
   runApp(
     // MultiProvider(
     //   providers: [
@@ -38,9 +47,17 @@ class MyApp extends StatelessWidget {
       }
     });
 
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Onboarding_Main(),
+    return ChangeNotifierProvider(
+      create: (_) => ThemeModel(),
+      child: Consumer(builder: (context, ThemeModel themeModel, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+              brightness:
+              themeModel.isDark ? Brightness.dark : Brightness.light),
+          home: const HomePage(),
+        );
+      }),
     );
   }
 }
@@ -67,7 +84,7 @@ class _SplashState extends State<Splash> {
       // If yes, then navigate to the home screen
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (BuildContext context) => const home(),
+          builder: (BuildContext context) => const HomePage(),
         ),
       );
     } else {

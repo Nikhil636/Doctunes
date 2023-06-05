@@ -30,3 +30,16 @@ class FilesModel {
   String ImgFileType;
   FilesModel(this.Title,this.SubTitle,this.ImgFileType);
 }
+
+class ImageSelect {
+  String img;
+  int pgno;
+  ImageSelect(this.img,this.pgno);
+}
+class VoiceModel{
+  String img;
+  String title;
+  String gender;
+  String language;
+  VoiceModel(this.img,this.title,this.language,this.gender);
+}
