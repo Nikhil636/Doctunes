@@ -1,8 +1,11 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../Screens/Authentication/Screens/Sign_up.dart';
+import '../Screens/MainScreens/homepage.dart';
 import '../Screens/Onboarding Screens/Screens/Onboarding Screen.dart';
 
 
@@ -21,7 +24,6 @@ class UserDataFetcher {
     return {};
   }
 }
-
 
 
 toaster(String msg) {

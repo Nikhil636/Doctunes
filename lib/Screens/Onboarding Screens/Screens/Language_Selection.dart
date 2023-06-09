@@ -15,14 +15,14 @@ class language_Selection extends StatefulWidget {
 
 class _language_SelectionState extends State<language_Selection> {
   List<LanguageModel> languages = [
-    LanguageModel("assets/images/Usa flag.svg", "English", false),
-    LanguageModel("assets/images/India Flag.svg", "Hindi", false),
-    LanguageModel("assets/images/French.svg", "French", false),
-    LanguageModel("assets/images/Germany.svg", "German", false),
-    LanguageModel("assets/images/Italy.svg", "Italian", false),
-    LanguageModel("assets/images/Korea.svg", "Korean", false),
-    LanguageModel("assets/images/Norway.svg", "Norwegian", false),
-    LanguageModel("assets/images/Polish.svg", "Polish", false),
+    LanguageModel("assets/Flags/Usa flag.svg", "English", false),
+    LanguageModel("assets/Flags/India Flag.svg", "Hindi", false),
+    LanguageModel("assets/Flags/French.svg", "French", false),
+    LanguageModel("assets/Flags/Germany.svg", "German", false),
+    LanguageModel("assets/Flags/Italy.svg", "Italian", false),
+    LanguageModel("assets/Flags/Korea.svg", "Korean", false),
+    LanguageModel("assets/Flags/Norway.svg", "Norwegian", false),
+    LanguageModel("assets/Flags/Polish.svg", "Polish", false),
   ];
   String? _selectedItem;
   Future<void> saveSelectedItem(String selectedItem) async {

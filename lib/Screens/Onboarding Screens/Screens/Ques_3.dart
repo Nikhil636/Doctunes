@@ -208,9 +208,6 @@ class _Question_3State extends State<Question_3> {
     userDocRef.update({
       'Question 3': selectedAnswers,
     }).then((value) {
-      // Navigate to the next screen
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const Question_4()));
     }).catchError((error) {
       // Handle any errors
       print('Error saving answers: $error');

@@ -66,7 +66,7 @@ class _Onboarding_MainState extends State<Onboarding_Main> {
                   Question_1(controller: controller               ),
                   Question_2(controller: controller),
                   Question_3(controller: controller),
-                  Question_4()
+                  Question_4(controller: controller,)
                 ],
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:doctunes/Screens/MainScreens/MyFiles.dart';
 import 'package:doctunes/Screens/MainScreens/profile.dart';
 import 'package:doctunes/Screens/MainScreens/settings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +10,10 @@ import 'package:provider/provider.dart';
 import '../../ThemeModel/thememodel.dart';
 import '../../Useful/Functions.dart';
 import '../../Useful/Model.dart';
+import '../../config/DatabaseConfig/childfolderhelper.dart';
+import '../../config/DatabaseConfig/childfoldermodel.dart';
+import '../../config/DatabaseConfig/masterfolderhelper.dart';
+import '../../config/DatabaseConfig/masterfoldermodel.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -48,24 +53,24 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  // @override
-  // void initState() {
-  //   FolderDatabase.instance.readAllNotes();
-  //   ChildFolderDatabase.instance.readAllNotes();
-  //   super.initState();
-  // }
-  //
-  // ChildMedia childMedia = ChildMedia(
-  //     masterId: 1,
-  //     childFolderId: 1,
-  //     childItemName: "Name",
-  //     createdTime: DateTime.now());
-  //
-  // FolderMedia masterMedia = FolderMedia(
-  //     masterId: 1,
-  //     masterFolderName: "R",
-  //     createdTime: DateTime.now(),
-  //     numberOFItems: 1);
+  @override
+  void initState() {
+    FolderDatabase.instance.readAllNotes();
+    ChildFolderDatabase.instance.readAllNotes();
+    super.initState();
+  }
+
+  ChildMedia childMedia = ChildMedia(
+      masterId: 1,
+      childFolderId: 1,
+      childItemName: "Name",
+      createdTime: DateTime.now());
+
+  FolderMedia masterMedia = FolderMedia(
+      masterId: 1,
+      masterFolderName: "R",
+      createdTime: DateTime.now(),
+      numberOFItems: 1);
 
   @override
   Widget build(BuildContext context) {
@@ -334,17 +339,17 @@ class _HomePageState extends State<HomePage> {
               ),
               GestureDetector(
                 onTap: () async {
-                  // if (kDebugMode) {
-                  //   print("Pressing the button");
-                  // }
-                  // await FolderDatabase.instance.update(
-                  //   FolderMedia(
-                  //       masterId: 1,
-                  //       masterFolderName: "Name",
-                  //       createdTime: DateTime.now(),
-                  //       numberOFItems: 10),
-                  // );
-                  // await FolderDatabase.instance.readMedia(1);
+                  if (kDebugMode) {
+                    print("Pressing the button");
+                  }
+                  await FolderDatabase.instance.update(
+                    FolderMedia(
+                        masterId: 1,
+                        masterFolderName: "Name",
+                        createdTime: DateTime.now(),
+                        numberOFItems: 10),
+                  );
+                  await FolderDatabase.instance.readMedia(1);
                 },
                 child: Row(
                   children: [

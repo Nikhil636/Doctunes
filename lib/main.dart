@@ -1,68 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:doctunes/Screens/MainScreens/AudioSelect.dart';
-import 'package:doctunes/Screens/MainScreens/Folder.dart';
-import 'package:doctunes/Screens/MainScreens/MyFiles.dart';
-import 'package:doctunes/Screens/MainScreens/Premium_Screen.dart';
 import 'package:doctunes/Screens/MainScreens/homepage.dart';
-import 'package:doctunes/Screens/MainScreens/profile.dart';
-import 'package:doctunes/Screens/MainScreens/settings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'Screens/Authentication/Screens/Sign_up.dart';
+import 'Screens/Onboarding Screens/Screens/Onboarding Screen.dart';
 import 'ThemeModel/thememodel.dart';
 import 'Useful/Functions.dart';
 
-void main() async{
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
-  runApp(
-    // MultiProvider(
-    //   providers: [
-    //     ChangeNotifierProvider(create: (_) => AnswersProvider()),
-    //   ],
-    //child:
-       const MyApp(),
-    // ),
-  );
+  runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (BuildContext context) => const sign_up(),
-          ),
-        );
-      }
-    });
-
     return ChangeNotifierProvider(
       create: (_) => ThemeModel(),
       child: Consumer(builder: (context, ThemeModel themeModel, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-              brightness:
-              themeModel.isDark ? Brightness.dark : Brightness.light),
-          home: const HomePage(),
+            brightness: themeModel.isDark ? Brightness.dark : Brightness.light,
+          ),
+          home: Splash(),
         );
       }),
     );
   }
-}
-
-class Splash extends StatefulWidget {
+}class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
 
   @override
@@ -70,47 +45,53 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      check();
-    });
+    check();
   }
 
   void check() async {
-    if (FirebaseAuth.instance.currentUser != null) {
-      // If yes, then navigate to the home screen
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (BuildContext context) => const HomePage(),
-        ),
-      );
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+      DocumentSnapshot userSnapshot = await firestore
+          .collection('users')
+          .doc(user.uid)
+          .get();
+
+      if (userSnapshot.exists && userSnapshot.data() is Map<String, dynamic>) {
+        Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
+        if (userData.containsKey('Question 1')) {
+          navScreen(const HomePage(), context, true);
+        } else {
+          navScreen(const Onboarding_Main(), context, true);
+        }
+      } else {
+        navScreen(const sign_up(), context, true);
+      }
     } else {
-      // If no, then navigate to the login screen
       navScreen(const sign_up(), context, true);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
+    return Scaffold(
+      body: Center(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              children: const [
-                Spacer(),
-              Text("Doctunes",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
-                Spacer(),
-              ],
+          children: const [
+            Text(
+              "Doctunes",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
             ),
+            SizedBox(height: 30,),
+            CircularProgressIndicator(),
           ],
         ),
       ),

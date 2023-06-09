@@ -10,7 +10,8 @@ import 'Language_Selection.dart';
 
 
 class Question_4 extends StatefulWidget {
-  const Question_4({Key? key}) : super(key: key);
+  final PageController controller;
+  const Question_4({Key? key, required this.controller}) : super(key: key);
 
   @override
   State<Question_4> createState() => _Question_4State();

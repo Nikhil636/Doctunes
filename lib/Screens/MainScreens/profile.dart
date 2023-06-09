@@ -237,7 +237,7 @@ class _ProfilepageState extends State<Profilepage> {
                               width: MediaQuery.of(context).size.width / 38,
                             ),
                             Text(
-                              '${_userData['displayName']}wdwd'
+                              '${_userData['displayName']}'
                                   '',
                               style: GoogleFonts.roboto(
                                   textStyle: TextStyle(
