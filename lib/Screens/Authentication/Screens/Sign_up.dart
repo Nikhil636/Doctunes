@@ -40,7 +40,6 @@ class _sign_upState extends State<sign_up> {
                       SvgPicture.asset(
                         'assets/AuthBG/Vector5.svg',
                         width: MediaQuery.of(context).size.width,
-
                       ),
                       SvgPicture.asset(
                         "assets/AuthBG/Vector.svg",
@@ -65,7 +64,7 @@ class _sign_upState extends State<sign_up> {
                   style: GoogleFonts.roboto(
                       fontSize:
                       MediaQuery.of(context).size.width * 0.032
-                      ,
+                      ,letterSpacing: 1.5,
                       fontWeight: FontWeight.w600,
                       color: hexStringToColor("#6B6B6B")),
                 )),
@@ -189,7 +188,7 @@ mainAxisAlignment: MainAxisAlignment.center,
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const User_Detail()));
+                            builder: (context) => const login()));
                   },
                   child: Container(
                     height: MediaQuery.of(context).size.width/8,
@@ -216,7 +215,7 @@ mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already have an account ?",
+                      "Don't have an account ?",
                       style: GoogleFonts.roboto(fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(width: 10),
@@ -224,11 +223,11 @@ mainAxisAlignment: MainAxisAlignment.center,
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const login()),
+                          MaterialPageRoute(builder: (context) => const User_Detail()),
                         );
                       },
                       child: Text(
-                        "Login",
+                        "Create",
                         style: GoogleFonts.roboto(
                             fontWeight: FontWeight.w600,
                             color: hexStringToColor("#2196F3"),

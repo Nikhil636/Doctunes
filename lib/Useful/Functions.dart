@@ -43,7 +43,6 @@ void Snacker(String title, GlobalKey<ScaffoldMessengerState> aa) {
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.grey,
       content: Text(title));
-
   aa.currentState?.showSnackBar(snackBar);
 }
 

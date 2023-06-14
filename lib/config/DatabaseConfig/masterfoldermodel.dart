@@ -24,10 +24,10 @@ class FolderMedia {
     required this.numberOFItems,
   });
   FolderMedia copy(
-          {int? masterId,
-          String? masterFolderName,
-          DateTime? createdTime,
-          int? numberOFItems}) =>
+      {int? masterId,
+        String? masterFolderName,
+        DateTime? createdTime,
+        int? numberOFItems}) =>
       FolderMedia(
           masterId: masterId ?? this.masterId,
           createdTime: createdTime ?? this.createdTime,
@@ -41,9 +41,9 @@ class FolderMedia {
       numberOFItems: json[MasterFolderField.numberOFItems] as int);
 
   Map<String, Object?> toJson() => {
-        MasterFolderField.masterFolderId: masterId,
-        MasterFolderField.masterFolderName: masterFolderName,
-        MasterFolderField.time: createdTime.toIso8601String(),
-        MasterFolderField.numberOFItems: numberOFItems,
-      };
+    MasterFolderField.masterFolderId: masterId,
+    MasterFolderField.masterFolderName: masterFolderName,
+    MasterFolderField.time: createdTime.toIso8601String(),
+    MasterFolderField.numberOFItems: numberOFItems,
+  };
 }

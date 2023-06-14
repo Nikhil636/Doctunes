@@ -1,10 +1,12 @@
 import 'package:doctunes/Screens/MainScreens/MyFiles.dart';
 import 'package:doctunes/Screens/MainScreens/profile.dart';
 import 'package:doctunes/Screens/MainScreens/settings.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:provider/provider.dart';
 import '../../ThemeModel/thememodel.dart';
@@ -14,6 +16,7 @@ import '../../config/DatabaseConfig/childfolderhelper.dart';
 import '../../config/DatabaseConfig/childfoldermodel.dart';
 import '../../config/DatabaseConfig/masterfolderhelper.dart';
 import '../../config/DatabaseConfig/masterfoldermodel.dart';
+import '../Authentication/Screens/Sign_up.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,6 +26,44 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  void signOut(BuildContext context) async {
+    try {
+      final currentUser = _auth.currentUser;
+      if (currentUser != null) {
+        if (currentUser.providerData.any((userInfo) => userInfo.providerId == 'google.com')) {
+          await signOutGoogle(context);
+        } else {
+          await _auth.signOut();
+        }
+      }
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => sign_up(),
+        ),
+      );
+    } catch (e) {
+      print("Error signing out: $e");
+      // Handle error
+    }
+  }
+
+  Future<void> signOutGoogle(BuildContext context) async {
+    try {
+      await _googleSignIn.signOut();
+      await _auth.signOut();
+      print("User signed out from Google");
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => sign_up(),
+        ),
+      );
+    } catch (e) {
+      print("Error signing out from Google: $e");
+      // Handle error
+    }
+  }
   List<FilesModel> Files = [
     FilesModel("Doctunes origin.jpg", "2023-01-13 - 12:05",
         "assets/File Type/Image.png"),
@@ -52,25 +93,39 @@ class _HomePageState extends State<HomePage> {
       );
     }
   }
-
+  Map<String, dynamic> _userData = {};
   @override
   void initState() {
-    FolderDatabase.instance.readAllNotes();
-    ChildFolderDatabase.instance.readAllNotes();
     super.initState();
+    _fetchUserData();
   }
 
-  ChildMedia childMedia = ChildMedia(
-      masterId: 1,
-      childFolderId: 1,
-      childItemName: "Name",
-      createdTime: DateTime.now());
+  void _fetchUserData() async {
+    Map<String, dynamic> userData = await UserDataFetcher.fetchUserData();
+    setState(() {
+      _userData = userData;
+    });
+  }
 
-  FolderMedia masterMedia = FolderMedia(
-      masterId: 1,
-      masterFolderName: "R",
-      createdTime: DateTime.now(),
-      numberOFItems: 1);
+
+  // @override
+  // void initState() {
+  //   FolderDatabase.instance.readAllNotes();
+  //   ChildFolderDatabase.instance.readAllNotes();
+  //   super.initState();
+  // }
+  //
+  // ChildMedia childMedia = ChildMedia(
+  //     masterId: 1,
+  //     childFolderId: 1,
+  //     childItemName: "Name",
+  //     createdTime: DateTime.now());
+  //
+  // FolderMedia masterMedia = FolderMedia(
+  //     masterId: 1,
+  //     masterFolderName: "R",
+  //     createdTime: DateTime.now(),
+  //     numberOFItems: 1);
 
   @override
   Widget build(BuildContext context) {
@@ -109,10 +164,20 @@ class _HomePageState extends State<HomePage> {
                                   builder: (context) => const Profilepage()));
                         },
                         child: CircleAvatar(
+                          backgroundColor: Colors.transparent,
                           radius: MediaQuery.of(context).size.height / 40,
-                          backgroundImage: const NetworkImage(
-                              "https://images.pexels.com/photos/1214205/pexels-photo-1214205.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
-                        ),
+                          backgroundImage: (_userData['GalleryPhoto'] != null
+                              ? NetworkImage('${_userData['GalleryPhoto']}')
+                              : (_userData['photoURL'] != null
+                              ? NetworkImage('${_userData['photoURL']}')
+                              : null)),
+                          child: (_userData['GalleryPhoto'] == null && _userData['photoURL'] == null)
+                              ? Icon(Icons.person,color: themeNotifier.isDark? Colors.white : Colors.black, size: MediaQuery.of(context).size.height / 35)
+                              : null,
+                        )
+
+
+
                       ),
                       title: Center(
                           child: Row(
@@ -328,6 +393,9 @@ class _HomePageState extends State<HomePage> {
                                     builder: (context) =>
                                         const SettingsPage()));
                           }
+                          if(value==6){
+                            signOut(context);
+                          }
                         },
                       ),
                     ),
@@ -339,17 +407,17 @@ class _HomePageState extends State<HomePage> {
               ),
               GestureDetector(
                 onTap: () async {
-                  if (kDebugMode) {
-                    print("Pressing the button");
-                  }
-                  await FolderDatabase.instance.update(
-                    FolderMedia(
-                        masterId: 1,
-                        masterFolderName: "Name",
-                        createdTime: DateTime.now(),
-                        numberOFItems: 10),
-                  );
-                  await FolderDatabase.instance.readMedia(1);
+                //   if (kDebugMode) {
+                //     print("Pressing the button");
+                //   }
+                //   await FolderDatabase.instance.update(
+                //     FolderMedia(
+                //         masterId: 1,
+                //         masterFolderName: "Name",
+                //         createdTime: DateTime.now(),
+                //         numberOFItems: 10),
+                //   );
+                //   await FolderDatabase.instance.readMedia(1);
                 },
                 child: Row(
                   children: [
@@ -673,6 +741,8 @@ class _HomePageState extends State<HomePage> {
               ),
               Expanded(
                 child: ListView.builder(
+                  padding: EdgeInsets.only(top: 0),
+                  physics: NeverScrollableScrollPhysics(),
                     itemExtent: 85,
                     itemCount: Files.length,
                     itemBuilder: (context, index) {

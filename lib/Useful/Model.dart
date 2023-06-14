@@ -43,3 +43,8 @@ class VoiceModel{
   String language;
   VoiceModel(this.img,this.title,this.language,this.gender);
 }
+class FAQModel{
+  String Question;
+  String Answer;
+  FAQModel(this.Question,this.Answer);
+}

@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctunes/config/DatabaseConfig/databaseModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +11,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 import '../../ThemeModel/thememodel.dart';
 import '../../Useful/Functions.dart';
 import '../Authentication/Screens/Sign_up.dart';
@@ -21,12 +24,18 @@ class Profilepage extends StatefulWidget {
 }
 
 class _ProfilepageState extends State<Profilepage> {
-  void signOutGoogle(BuildContext context) async {
-    GoogleSignIn googleSignIn = GoogleSignIn();
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  void signOut(BuildContext context) async {
     try {
-      await googleSignIn.signOut();
-      print("User signed out");
+      final currentUser = _auth.currentUser;
+      if (currentUser != null) {
+        if (currentUser.providerData.any((userInfo) => userInfo.providerId == 'google.com')) {
+          await signOutGoogle(context);
+        } else {
+          await _auth.signOut();
+        }
+      }
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => sign_up(),
@@ -34,10 +43,26 @@ class _ProfilepageState extends State<Profilepage> {
       );
     } catch (e) {
       print("Error signing out: $e");
+      // Handle error
+    }
+  }
+
+  Future<void> signOutGoogle(BuildContext context) async {
+    try {
+      await _googleSignIn.signOut();
+      await _auth.signOut();
+      print("User signed out from Google");
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => sign_up(),
+        ),
+      );
+    } catch (e) {
+      print("Error signing out from Google: $e");
+      // Handle error
     }
   }
   ImagePicker? picker;
-
   File? _image;
   Map<String, dynamic> _userData = {};
 
@@ -53,8 +78,7 @@ class _ProfilepageState extends State<Profilepage> {
       _userData = userData;
     });
   }
-
-  Future? _pickImage(ImageSource source) async {
+  Future<void> _pickImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
       if (image == null) return;
@@ -62,6 +86,15 @@ class _ProfilepageState extends State<Profilepage> {
       setState(() {
         _image = img;
       });
+
+      // Call setState to trigger a rebuild of the widget tree
+      setState(() {});
+
+      // Upload the image to Firebase Storage and save the URL in Firestore
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await _uploadImageAndSaveToFirestore(_image!, user.uid);
+      }
     } on PlatformException catch (e) {
       if (kDebugMode) {
         print(e);
@@ -69,6 +102,31 @@ class _ProfilepageState extends State<Profilepage> {
       Navigator.pop(context);
     }
   }
+
+  Future<void> _uploadImageAndSaveToFirestore(File imageFile, String uid) async {
+    try {
+      // Upload the image to Firebase Storage
+      final storageRef = FirebaseStorage.instance.ref().child('profile_images/$uid.jpg');
+      final uploadTask = storageRef.putFile(imageFile);
+
+      // Get the download URL of the uploaded image
+      final snapshot = await uploadTask.whenComplete(() {});
+      final imageUrl = await snapshot.ref.getDownloadURL() + '?timestamp=${DateTime.now().millisecondsSinceEpoch}';
+
+      // Save the image URL in Firestore
+      final userRef = FirebaseFirestore.instance.collection('users').doc(uid);
+      await userRef.update({
+        'GalleryPhoto': imageUrl,
+      });
+
+      // Show a success message or perform any other desired actions
+      print('Image uploaded and URL saved to Firestore.');
+    } catch (error) {
+      // Handle any errors that occur during the upload process
+      print('Error uploading image: $error');
+    }
+  }
+
 
   Color whiteTheme = const Color(0xFFd9d9d9);
   Color darkTheme = const Color(0xFF434853);
@@ -150,21 +208,33 @@ class _ProfilepageState extends State<Profilepage> {
                     children: [
                       Center(
                         child: Container(
-                          height: MediaQuery.of(context).size.width / 3.1,
-                          width: MediaQuery.of(context).size.width / 3.1,
+                          height: MediaQuery.of(context).size.width / 3,
+                          width: MediaQuery.of(context).size.width / 3,
                           child: _image == null
+                              ? _userData['GalleryPhoto'] != null
                               ? CircleAvatar(
-                                  radius:
-                                      MediaQuery.of(context).size.height / 35,
-                                  backgroundImage: const NetworkImage(
-                                      'https://images.pexels.com/photos/4307869/pexels-photo-4307869.jpeg?auto=compress&cs=tinysrgb&w=600'),
-                                )
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: NetworkImage('${_userData['GalleryPhoto']}'),
+                            radius: MediaQuery.of(context).size.height / 35,
+                          )
+                              : _userData['photoURL'] != null
+                              ? CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: NetworkImage('${_userData['photoURL']}'),
+                            radius: MediaQuery.of(context).size.height / 35,
+                          )
                               : CircleAvatar(
-                                  backgroundImage: FileImage(_image!),
-                                  radius:
-                                      MediaQuery.of(context).size.height / 35,
-                                ),
+                            backgroundColor: Colors.white,
+                            radius: MediaQuery.of(context).size.height / 35,
+                            child: Icon(Icons.person,color: Colors.black,size:MediaQuery.of(context).size.height / 8),
+                          )
+                              : CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: NetworkImage('${_userData['GalleryPhoto']}'),
+                            radius: MediaQuery.of(context).size.height / 35,
+                          ),
                         ),
+
                       ),
                       Center(
                         child: Container(
@@ -237,8 +307,7 @@ class _ProfilepageState extends State<Profilepage> {
                               width: MediaQuery.of(context).size.width / 38,
                             ),
                             Text(
-                              '${_userData['displayName']}'
-                                  '',
+                              '${_userData['displayName']}',
                               style: GoogleFonts.roboto(
                                   textStyle: TextStyle(
                                     fontWeight: FontWeight.w400,
@@ -433,7 +502,7 @@ class _ProfilepageState extends State<Profilepage> {
                 ),
                 GestureDetector(
                   onTap: (){
-                    signOutGoogle(context);
+                   signOut(context);
                   },
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height / 10,
