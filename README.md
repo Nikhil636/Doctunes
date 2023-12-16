@@ -1,16 +1,25 @@
-# doctunes
+# DocTunes App
 
-A new Flutter project.
+Welcome to the DocTunes mobile application repository! This project, developed during my internship, is a feature-rich application with over 20 screens. The Figma UI design provided the foundation for crafting a seamless user experience.
+
+## Features
+
+- **Firebase Google Authentication:** Secure user access.
+- **Firestore Integration:** Efficient storage of signed-in user data.
+- **Dark Mode:** Enhanced visual experience.
+
+## Codebase
+
+This repository contains the frontend code developed entirely from scratch. The project has been successfully deployed on the Google Play Store, amassing over 100k downloads and positive ratings.
+
+## Partnerships
+
+DocTunes has also entered into a partnership with Bhashini, further enhancing the application's capabilities.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To explore or contribute to the project, follow the steps in the [**Installation Guide**](#).
 
-A few resources to get you started if this is your first Flutter project:
+Feel free to provide feedback or report issues in the [**Issues section**](/issues). Thank you for being part of the DocTunes community!
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Happy coding! 🎶✨
